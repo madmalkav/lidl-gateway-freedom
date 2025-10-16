@@ -9,10 +9,10 @@ if [ $EZSP_VERSION = "V8" ]; then
   CONFIGURATION_FRAME="\x00\x42\x21\xA8\x5C\x2C\xA0\x7E"
 fi
 
-cat sx | ssh -p${SSH_PORT} root@${GATEWAY_HOST} "cat > /tmp/sx"
-cat ${FIRMWARE_FILE} | ssh -p${SSH_PORT} root@${GATEWAY_HOST} "cat > /tmp/firmware.gbl"
+cat sx | ssh -o HostKeyAlgorithms=+ssh-rsa -p${SSH_PORT} root@${GATEWAY_HOST} "cat > /tmp/sx"
+cat ${FIRMWARE_FILE} | ssh -o HostKeyAlgorithms=+ssh-rsa -p${SSH_PORT} root@${GATEWAY_HOST} "cat > /tmp/firmware.gbl"
 
-ssh -p${SSH_PORT} root@${GATEWAY_HOST} "
+ssh -o HostKeyAlgorithms=+ssh-rsa -p${SSH_PORT} root@${GATEWAY_HOST} "
 chmod +x /tmp/sx
 killall -q serialgateway
 stty -F /dev/ttyS1 115200 cs8 -cstopb -parenb -ixon crtscts raw
